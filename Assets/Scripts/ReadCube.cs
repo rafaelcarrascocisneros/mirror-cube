@@ -30,13 +30,12 @@ public class ReadCube : MonoBehaviour
 
         cubeState = FindObjectOfType<CubeState>();
         cubeMap = FindObjectOfType<CubeMap>();
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        ReadState();
+
     }
 
     public void ReadState()
@@ -110,7 +109,7 @@ public class ReadCube : MonoBehaviour
             {
                 Debug.DrawRay(ray, rayTransform.forward * hit.distance, Color.yellow);
                 facesHit.Add(hit.collider.gameObject);
-                print(hit.collider.gameObject.name);
+                // print(hit.collider.gameObject.name);
             }
             else
             {
