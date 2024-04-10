@@ -59,32 +59,30 @@ public class ReadCube : MonoBehaviour
     void SetRayTransforms()
     {
         // populate the ray lists with raycasts eminating from the transform, angled towards the cube.
-        upRays = BuildRays(tUp, new Vector3(90, 90, 0));
-        downRays = BuildRays(tDown, new Vector3(270, 90, 0));
-        leftRays = BuildRays(tLeft, new Vector3(0, 180, 0));
-        rightRays = BuildRays(tRight, new Vector3(0, 0, 0));
-        frontRays = BuildRays(tFront, new Vector3(0, 90, 0));
-        backRays = BuildRays(tBack, new Vector3(0, 270, 0));
+        frontRays = BuildRays(tFront, new Vector3(0, 90, 0), 0.55f, 0.5f, new List<int> { 0, 3, 6 }, new List<int> { 6, 7, 8 });
+        backRays = BuildRays(tBack, new Vector3(0, 270, 0), -0.55f, 0.5f, new List<int> { 2, 5, 8 }, new List<int> { 6, 7, 8 });
+        upRays = BuildRays(tUp, new Vector3(90, 90, 0), 0.55f, 0.5f, new List<int> { 0, 3, 6 }, new List<int> { 6, 7, 8 });
+        downRays = BuildRays(tDown, new Vector3(270, 90, 0), 0.55f, -0.5f, new List<int> { 0, 3, 6 }, new List<int> { 0, 1, 2 });
+        leftRays = BuildRays(tLeft, new Vector3(0, 180, 0), -0.55f, 0.5f, new List<int> { 2, 5, 8 }, new List<int> { 6, 7, 8 });
+        rightRays = BuildRays(tRight, new Vector3(0, 0, 0), 0.55f, 0.5f, new List<int> { 0, 3, 6 }, new List<int> { 6, 7, 8 });
     }
 
-    List<GameObject> BuildRays(Transform rayTransform, Vector3 direction)
+    List<GameObject> BuildRays(Transform rayTransform, Vector3 direction, float xOffset, float yOffset, List<int> raysToOffsetx, List<int> raysToOffsety)
     {
         // The ray count is used to name the rays so we can be sure they are in the right order.
         int rayCount = 0;
         List<GameObject> rays = new List<GameObject>();
-        // This creates 9 rays in the shape of the side of the cube with
-        // Ray 0 at the top left and Ray 8 at the bottom right:
-        // |0|1|2|
-        // |3|4|5|
-        // |6|7|8|
 
         for (int y = 1; y > -2; y--)
         {
             for (int x = -1; x < 2; x++)
             {
-                Vector3 startPos = new Vector3( rayTransform.localPosition.x + x,
-                                                rayTransform.localPosition.y + y,
-                                                rayTransform.localPosition.z);
+                float offsetX = raysToOffsetx.Contains(rayCount) ? xOffset : 0;
+                float offsetY = raysToOffsety.Contains(rayCount) ? yOffset : 0;
+
+                Vector3 startPos = new Vector3(rayTransform.localPosition.x + x + offsetX,
+                                            rayTransform.localPosition.y + y + offsetY,
+                                            rayTransform.localPosition.z);
                 GameObject rayStart = Instantiate(emptyGO, startPos, Quaternion.identity, rayTransform);
                 rayStart.name = rayCount.ToString();
                 rays.Add(rayStart);
