@@ -45,6 +45,8 @@ public class SelectFace : MonoBehaviour
                     {
                         // Pick it up
                         cubeState.PickUp(cubeSide);
+                        // start the side rotation logic
+                        cubeSide[4].transform.parent.GetComponent<PivotRotation>().Rotate(cubeSide);
                     }
                 }
             }

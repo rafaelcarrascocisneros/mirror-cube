@@ -94,6 +94,15 @@ public class PivotRotation : MonoBehaviour
         localForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
     }
 
+    public void StartAutoRotate(List<GameObject> side, float angle)
+    {
+        cubeState.PickUp(side);
+        Vector3 localForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
+        targetQuaternion = Quaternion.AngleAxis(angle, localForward) * transform.localRotation;
+        activeSide = side;
+        autoRotating = true;
+    }
+
     public void RotateToRightAngle()
     {
         // get the current rotation
@@ -115,13 +124,13 @@ public class PivotRotation : MonoBehaviour
         var step = speed * Time.deltaTime;
         transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetQuaternion, step);
 
-        // if within one degree, set angle to target andle and end the rotation
+        // if within one degree, set angle to target angle and end the rotation
         if (Quaternion.Angle(transform.localRotation, targetQuaternion) <= 1)
         {
             transform.localRotation = targetQuaternion;
             // unparent little cubes
             cubeState.PutDown(activeSide, transform.parent);
-
+            CubeState.autoRotating = false;
             autoRotating = false;
             dragging = false;
         }
