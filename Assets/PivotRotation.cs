@@ -43,46 +43,52 @@ public class PivotRotation : MonoBehaviour
         }
     }
 
-    private void SpinSide(List<GameObject> side)
+    private void SpinSide(List<GameObject> side, float? autoRotationAngle = null)
     {
         // reset the rotation
         rotation = Vector3.zero;
 
-        // current mouse position minus the last mouse position
-        Vector3 mouseOffset = (Input.mousePosition - mouseRef);
+        // If autoRotationAngle is null, calculate rotation based on mouse movement
+        if (autoRotationAngle == null)
+        {
+            // current mouse position minus the last mouse position
+            Vector3 mouseOffset = (Input.mousePosition - mouseRef);
 
-        if (side == cubeState.up)
-        {
-            rotation.y = (mouseOffset.x + mouseOffset.y) * sensitivity * 1;
-        }
-        if (side == cubeState.down)
-        {
-            rotation.y = (mouseOffset.x + mouseOffset.y) * sensitivity * -1;
-        }
-        if (side == cubeState.left)
-        {
-            rotation.z = (mouseOffset.x + mouseOffset.y) * sensitivity * 1;
-        }
-        if (side == cubeState.right)
-        {
-            rotation.z = (mouseOffset.x + mouseOffset.y) * sensitivity * -1;
-        }
-        if (side == cubeState.front)
-        {
-            rotation.x = (mouseOffset.x + mouseOffset.y) * sensitivity * -1;
-        }
-        if (side == cubeState.back)
-        {
-            rotation.x = (mouseOffset.x + mouseOffset.y) * sensitivity * 1;
-        }
+            if (side == cubeState.up || side == cubeState.down)
+            {
+                rotation.y = (mouseOffset.x + mouseOffset.y) * sensitivity * (side == cubeState.up ? 1 : -1);
+            }
+            else if (side == cubeState.left || side == cubeState.right)
+            {
+                rotation.z = (mouseOffset.x + mouseOffset.y) * sensitivity * (side == cubeState.left ? 1 : -1);
+            }
+            else if (side == cubeState.front || side == cubeState.back)
+            {
+                rotation.x = (mouseOffset.x + mouseOffset.y) * sensitivity * (side == cubeState.front ? 1 : -1);
+            }
+            // rotate
+            transform.Rotate(rotation, Space.Self);
 
-        
-
-        // rotate
-        transform.Rotate(rotation, Space.Self);
-
-        // store mouse
-        mouseRef = Input.mousePosition;
+            // store mouse
+            mouseRef = Input.mousePosition;
+        }
+        else // If autoRotationAngle is not null, use it directly
+        {
+            if (side == cubeState.up || side == cubeState.down)
+            {
+                rotation.y = autoRotationAngle.Value * (side == cubeState.up ? 1 : -1);
+            }
+            else if (side == cubeState.left || side == cubeState.right)
+            {
+                rotation.z = autoRotationAngle.Value * (side == cubeState.left ? 1 : -1);
+            }
+            else if (side == cubeState.front || side == cubeState.back)
+            {
+                rotation.x = autoRotationAngle.Value * (side == cubeState.left ? 1 : -1);
+            }
+            // rotate
+            transform.Rotate(rotation, Space.Self);
+        }
     }
 
     public void Rotate(List<GameObject> side)
@@ -98,9 +104,10 @@ public class PivotRotation : MonoBehaviour
     {
         cubeState.PickUp(side);
         Vector3 localForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
-        targetQuaternion = Quaternion.AngleAxis(angle, localForward) * transform.localRotation;
         activeSide = side;
         autoRotating = true;
+        // set the target rotation
+        SpinSide(side, angle);
     }
 
     public void RotateToRightAngle()

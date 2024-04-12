@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 public class Automate : MonoBehaviour
 {
-    public static List<string> moveList = new List<string>() { "U", "U" };
+    public static List<string> moveList = new List<string>() { "U" };
     private CubeState cubeState;
 
     // Start is called before the first frame update
@@ -31,7 +32,7 @@ public class Automate : MonoBehaviour
         CubeState.autoRotating = true;
         if(move == "U")
         {
-            RotateSide(cubeState.up, -90);
+            RotateSide(cubeState.up, 90);
         }
     }
 
