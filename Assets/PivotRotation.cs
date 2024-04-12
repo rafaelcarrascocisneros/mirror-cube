@@ -11,7 +11,7 @@ public class PivotRotation : MonoBehaviour
     private bool dragging = false;
     private bool autoRotating = false;
     private float sensitivity = 0.4f;
-    private float speed = 300f;
+    private float speed = 150f;
     private Vector3 rotation;
 
     private Quaternion targetQuaternion;
@@ -103,7 +103,23 @@ public class PivotRotation : MonoBehaviour
     public void StartAutoRotate(List<GameObject> side, float angle)
     {
         cubeState.PickUp(side);
-        Vector3 localForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
+        Vector3 rotationAxis;
+
+        // Determine the rotation axis based on the side
+        if (side == cubeState.up || side == cubeState.down)
+        {
+            rotationAxis = new Vector3(0, 1, 0); // Y-axis
+        }
+        else if (side == cubeState.left || side == cubeState.right)
+        {
+            rotationAxis = new Vector3(0, 0, 1); // Z-axis
+        }
+        else // if (side == cubeState.front || side == cubeState.back)
+        {
+            rotationAxis = new Vector3(1, 0, 0); // X-axis
+        }
+
+        targetQuaternion = Quaternion.AngleAxis(angle, rotationAxis) * transform.localRotation;
         activeSide = side;
         autoRotating = true;
         // set the target rotation
