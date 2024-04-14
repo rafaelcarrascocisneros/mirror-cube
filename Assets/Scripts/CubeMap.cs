@@ -13,10 +13,16 @@ public class CubeMap : MonoBehaviour
     public Transform right;
     public Transform front;
     public Transform back;
+
+    // Camera variables for toggle
+    public Camera mainCamera; // Assign this in the Unity editor
+    private Vector3 originalCameraPosition;
+    public Vector3 cameraPositionWhenMapIsOff; // Assign this in the Unity editor
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        originalCameraPosition = mainCamera.transform.position;
     }
 
     // Update is called once per frame
@@ -72,6 +78,16 @@ public class CubeMap : MonoBehaviour
     
     public void ToggleVisibility()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        bool isActive = gameObject.activeSelf;
+        gameObject.SetActive(!isActive);
+
+        if (isActive)
+        {
+            mainCamera.transform.position = cameraPositionWhenMapIsOff;
+        }
+        else
+        {
+            mainCamera.transform.position = originalCameraPosition;
+        }
     }
 }

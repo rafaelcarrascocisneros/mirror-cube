@@ -183,6 +183,8 @@ MonoBehaviour:
   right: {fileID: 54857694}
   front: {fileID: 791953528}
   back: {fileID: 2042081801}
+  mainCamera: {fileID: 963194227}
+  cameraPositionWhenMapIsOff: {x: -4.5, y: 4.5, z: -6}
 --- !u!1 &27295013
 GameObject:
   m_ObjectHideFlags: 0
