@@ -69,4 +69,9 @@ public class CubeMap : MonoBehaviour
             i++;
         }
     }
+    
+    public void ToggleVisibility()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
 }

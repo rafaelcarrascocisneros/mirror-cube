@@ -43,7 +43,11 @@ public class ReadCube : MonoBehaviour
     public void ReadState()
     {
         cubeState = FindObjectOfType<CubeState>();
-        cubeMap = FindObjectOfType<CubeMap>();
+        
+        if(cubeMap.gameObject.activeSelf)
+        {
+            cubeMap = FindObjectOfType<CubeMap>();
+        }
 
         // set the state of each position in the list of sides so we know
         // what color is in what position
@@ -54,8 +58,13 @@ public class ReadCube : MonoBehaviour
         cubeState.front = ReadFace(frontRays, tFront);
         cubeState.back = ReadFace(backRays, tBack);
 
-        // update the map with the found positions
-        cubeMap.Set();
+        // check if cubeMap is toggled on
+        if(cubeMap.gameObject.activeSelf)
+        {
+            // update the map with the found positions
+            cubeMap.Set();
+        }
+
     }
 
     void SetRayTransforms()
