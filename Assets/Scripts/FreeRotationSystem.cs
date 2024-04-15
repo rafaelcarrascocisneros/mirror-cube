@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class RotationSystem : MonoBehaviour
+public class FreeRotationSystem : MonoBehaviour
 {
     public Transform target; // The target object to rotate.
     public float rotationSpeed = 0.2f; // Rotation sensitivity.
@@ -10,9 +11,18 @@ public class RotationSystem : MonoBehaviour
     private Vector3 virtualPivot; // The calculated centroid of the target.
     private Vector3 rotationVelocity; // The current rotation velocity, used for momentum.
     private Vector3 lastMousePosition;
+    private Vector3 originalCubePosition;
+    private Quaternion originalCubeRotation;
+
+    // Toggle variables for the button
+    public FixedRotationSystem fixedRotationSystem; // Assign this in the Unity editor
+    public CubeMap cubeMap; // Assign this in the Unity editor
+    public Button cubeMapButton;
 
     void Start()
     {
+        originalCubePosition = target.position;
+        originalCubeRotation = target.rotation;
         CalculateVirtualPivot();
     }
 
@@ -60,5 +70,29 @@ public class RotationSystem : MonoBehaviour
     {
         target.RotateAround(virtualPivot, Vector3.up, -velocity.x);
         target.RotateAround(virtualPivot, Vector3.right, velocity.y);
+    }
+
+    public void ToggleFreeRotationSystem()
+    {
+        bool isActive = this.enabled;
+
+        // Toggle FreeRotationSystem
+        this.enabled = !isActive;
+
+        // Toggle FixedRotationSystem
+        fixedRotationSystem.enabled = isActive;
+
+        // Toggle CubeMap
+        cubeMap.ToggleVisibility();
+
+        // Disable CubeMap button
+        cubeMapButton.interactable = isActive;
+
+        // Reset cube to original position
+        if (!this.enabled)
+        {
+            target.position = originalCubePosition;
+            target.rotation = originalCubeRotation;
+        }
     }
 }
