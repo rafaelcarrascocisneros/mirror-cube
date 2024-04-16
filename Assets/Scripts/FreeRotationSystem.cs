@@ -82,14 +82,24 @@ public class FreeRotationSystem : MonoBehaviour
         // Toggle FixedRotationSystem
         fixedRotationSystem.enabled = isActive;
 
-        // Toggle CubeMap
-        cubeMap.ToggleVisibility();
-
-        // Disable CubeMap button
-        cubeMapButton.interactable = isActive;
-
-        // Reset cube to original position
+        // If FreeRotationSystem is being disabled, turn on CubeMap and its button
         if (!this.enabled)
+        {
+            cubeMap.ToggleVisibility();
+            cubeMapButton.interactable = true;
+        }
+        // If FreeRotationSystem is being enabled, turn off CubeMap and its button
+        else
+        {
+            if (cubeMap.isVisible)
+            {
+                cubeMap.ToggleVisibility();
+            }
+            cubeMapButton.interactable = false;
+        }
+
+        // Reset cube to original position only if it's not already there
+        if (!this.enabled && (target.position != originalCubePosition || target.rotation != originalCubeRotation))
         {
             target.position = originalCubePosition;
             target.rotation = originalCubeRotation;

@@ -7,6 +7,8 @@ public class CubeMap : MonoBehaviour
 {
     CubeState cubeState;
 
+    public bool isVisible;
+
     public Transform up;
     public Transform down;
     public Transform left;
@@ -22,6 +24,8 @@ public class CubeMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+            // Initialize isVisible based on the actual visibility of the gameObject
+        isVisible = gameObject.activeSelf;
         originalCameraPosition = mainCamera.transform.position;
     }
 
@@ -81,13 +85,16 @@ public class CubeMap : MonoBehaviour
         bool isActive = gameObject.activeSelf;
         gameObject.SetActive(!isActive);
 
-        if (isActive)
+        // Update isVisible based on the actual visibility of the gameObject
+        isVisible = gameObject.activeSelf;
+
+        if (!isActive)
         {
-            mainCamera.transform.position = cameraPositionWhenMapIsOff;
+            mainCamera.transform.position = originalCameraPosition;
         }
         else
         {
-            mainCamera.transform.position = originalCameraPosition;
+            mainCamera.transform.position = cameraPositionWhenMapIsOff;
         }
     }
 }
