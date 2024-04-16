@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0e9cd250936f44f92d82795d6b14f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isVisible: 0
   up: {fileID: 730573337}
   down: {fileID: 1438994388}
   left: {fileID: 390144631}
@@ -9726,11 +9727,15 @@ MonoBehaviour:
     m_Options:
     - m_Text: Mirror-Black
       m_Image: {fileID: 0}
+    - m_Text: Void-Black
+      m_Image: {fileID: 0}
     - m_Text: Mirror-Gray
       m_Image: {fileID: 0}
-    - m_Text: White
+    - m_Text: Metallic-Blue
       m_Image: {fileID: 0}
-    - m_Text: Black
+    - m_Text: Ceramic-White
+      m_Image: {fileID: 0}
+    - m_Text: Platinum
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19605,11 +19610,15 @@ MonoBehaviour:
     m_Options:
     - m_Text: Mirror-Black
       m_Image: {fileID: 0}
+    - m_Text: Void-Black
+      m_Image: {fileID: 0}
     - m_Text: Mirror-Gray
       m_Image: {fileID: 0}
-    - m_Text: White
+    - m_Text: Metallic-Blue
       m_Image: {fileID: 0}
-    - m_Text: Black
+    - m_Text: Ceramic-White
+      m_Image: {fileID: 0}
+    - m_Text: Platinum
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -25033,8 +25042,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeMaterials:
   - {fileID: 2100000, guid: 19949626865e2fb4c90702e2008c2563, type: 2}
+  - {fileID: 2100000, guid: d40aba0e608b64d4c9e2c65ce93836f5, type: 2}
   - {fileID: 2100000, guid: a58b76b3f2af49e47a41691fe506cc96, type: 2}
+  - {fileID: 2100000, guid: f7bdbc3321c264e43a8984ef736d7ee6, type: 2}
   - {fileID: 2100000, guid: c4c8bf90f0f8c8c4c9ad75d1aeeb8c2a, type: 2}
-  - {fileID: 2100000, guid: 83f0f6a3dba85a74b92264f05e116757, type: 2}
+  - {fileID: 2100000, guid: 22939f4e1cab0aa4dba879c33d58d776, type: 2}
   childColorDropdown: {fileID: 820836934}
   grandChildColorDropdown: {fileID: 1694372649}
